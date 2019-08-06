@@ -28,7 +28,6 @@ class DropdownList extends Component <{}, DropdownTypeState>{
     this.setState({
       selectedCity: e.target.value
     })
-    console.log(this.state.selectedCity);
   }
 
   render(){
@@ -90,20 +89,33 @@ class Weather extends Component <WeatherPropsType,WeatherStateType>{
         }))}
   }
 
+  getFullNameOfDay(date: any){
+    var currentDate = new Date();
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return date == currentDate.getDay() ? "Today" : days[date];
+  }
   render(){
 
     const{weather, isLoading} = this.state;
-
+   
     if(isLoading){
       return <p>Loading...</p>
     }
 
     return(
       
-      <div>
+      <div className="basicInfoContainer">
        
-      {weather.map((cityWeather:any) =>
+      {weather.map((cityWeather:any) => 
+        <div className="basicInfo">
+        
+        <h4>{this.getFullNameOfDay(new Date(cityWeather.date).getDay())}</h4>
+        <img src={require('./'+ cityWeather.type+'.png')} />
         <h4>Temperature: {cityWeather.temperature} </h4>
+        <h5>Pollen {cityWeather.pollenCount}</h5>
+        
+      </div>
+      
       )}
         
         
