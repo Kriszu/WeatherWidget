@@ -4,15 +4,30 @@ select{
   border-style: none;
   font-size: 72px;
   -webkit-appearance: none;
+  float:left;
 }
 select:active{
   border-style: none;
 }
-.basicInfoContainer{
 
-}
 .basicInfo{
   float: left;
-  padding: 10px;
+  padding-left: 20px;
   margin: 10px;
+  margin-left: 20px;
+}
+.detailed-left{
+  margin-left: 20px;
+  clear: left;
+  float: left;
+}
+.detailed-right{
+  margin-left: 400px;
+}
+.detailed-row{
+  clear: both;
+  margin-left: 20px;
+}
+.basicInfoContainer{
+ clear: both;
 }

@@ -20,7 +20,8 @@ class DropdownList extends Component <{}, DropdownTypeState>{
     fetch('http://dev-weather-api.azurewebsites.net/api/city')
       .then(res => res.json())
         .then(data => this.setState({
-          cities: data, 
+          cities: data,
+          selectedCity: data[0].id
         }))
   }
 
@@ -94,38 +95,87 @@ class Weather extends Component <WeatherPropsType,WeatherStateType>{
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return date == currentDate.getDay() ? "Today" : days[date];
   }
-  render(){
 
+  render(){
+    
     const{weather, isLoading} = this.state;
-   
-    if(isLoading){
-      return <p>Loading...</p>
-    }
+
 
     return(
-      
-      <div className="basicInfoContainer">
+      <div><WeatherDetails weather={weather}></WeatherDetails> 
+        <div className="basicInfoContainer">
+           
+          {weather.map((cityWeather:any) => 
+         <div className="basicInfo">
+          
+         <h4>{this.getFullNameOfDay(new Date(cityWeather.date).getDay())}</h4>
+         <img src={require('./'+ cityWeather.type+'.png')} />
+         <span><br></br>{cityWeather.temperature}<br></br> </span>
+         <span>Pollen {cityWeather.pollenCount}</span>
+       </div>
        
-      {weather.map((cityWeather:any) => 
-        <div className="basicInfo">
-        
-        <h4>{this.getFullNameOfDay(new Date(cityWeather.date).getDay())}</h4>
-        <img src={require('./'+ cityWeather.type+'.png')} />
-        <h4>Temperature: {cityWeather.temperature} </h4>
-        <h5>Pollen {cityWeather.pollenCount}</h5>
-        
-      </div>
-      
-      )}
-        
-        
-      </div>
-      
+       )}
+       </div>
+       </div>
 
     )
   }
 }
+type WeatherDetailsProps = {
+  weather: []
+}
+class WeatherDetails extends Component<WeatherDetailsProps, {}> {
 
+  constructor(props: WeatherDetailsProps){
+    super(props)
+  }
+
+  formatThatDate(date: Date){
+    var currentDate = new Date();
+    var ending = () => {
+      var d = date.getDay()
+      if (d > 3 && d < 21) return 'th'; 
+        switch (d % 10) {
+          case 1:  return "st";
+          case 2:  return "nd";
+          case 3:  return "rd";
+          default: return "th";
+  }
+    }
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return days[date.getDay()] + ", " + months[date.getMonth()-1] + " " + date.getDate() + ending();
+  }
+  render(){
+    return(
+    this.props.weather.map((detailed:any) => 
+      {
+        if(new Date(detailed.date).getDay() === new Date().getDay()){
+          return (
+            <div className="detailed-row">
+              <div className="detailed-left">
+                <span>{this.formatThatDate(new Date(detailed.date))}<br></br></span>
+                <span>{detailed.type}<br></br></span>
+                <img src={require('./'+ detailed.type+'.png')} />
+                <span><br></br> {detailed.temperature}</span>
+              </div>
+            <div className="detailed-right">
+              <span>Precipitation: {detailed.precipitation}%</span> <br></br>
+              <span>Humidity: {detailed.humidity}%</span> <br></br>
+              <span>Wind: {detailed.windInfo.speed} {detailed.windInfo.direction}</span> <br></br>
+              <span>Pollen Count: {detailed.pollenCount}</span> <br></br>
+            </div>
+            </div>
+          )
+        } else {
+          return "";
+        }
+      }
+    )
+    )
+  }
+
+}
 const App: React.FC = () => {
   return (
     <div className="App">
