@@ -4,7 +4,6 @@ import './App.css';
 type DropdownTypeState = {
   cities: [],
   selectedCity: string,
-  isLoading: Boolean
 }
 
 class DropdownList extends Component <{}, DropdownTypeState>{
@@ -14,21 +13,14 @@ class DropdownList extends Component <{}, DropdownTypeState>{
     this.state = {
       cities: [],
       selectedCity: "Not chosen",
-      isLoading: false
     }
   }
 
   componentDidMount(){
-
-    this.setState({
-      isLoading: true
-    });
-
     fetch('http://dev-weather-api.azurewebsites.net/api/city')
       .then(res => res.json())
         .then(data => this.setState({
-          cities: data,
-          isLoading: false  
+          cities: data, 
         }))
   }
 
@@ -36,15 +28,12 @@ class DropdownList extends Component <{}, DropdownTypeState>{
     this.setState({
       selectedCity: e.target.value
     })
+    console.log(this.state.selectedCity);
   }
 
   render(){
 
-    const {cities, selectedCity, isLoading} = this.state;
-
-    if(isLoading){
-      return <p>Loading please wait...</p>
-    }
+    const {cities, selectedCity} = this.state;
 
     return (
 
@@ -54,11 +43,75 @@ class DropdownList extends Component <{}, DropdownTypeState>{
               <option value={city.id}>{city.name}</option>
               )}
         </select>
+        <Weather cityId={parseInt(this.state.selectedCity)}></Weather>
       </div>
     )
   }
 
   
+}
+
+type WeatherPropsType = {
+  cityId: number
+}
+
+type WeatherStateType = {
+  weather: [],
+  isLoading: Boolean
+}
+
+
+class Weather extends Component <WeatherPropsType,WeatherStateType>{
+
+  constructor(props: WeatherPropsType){
+    super(props);
+    this.state = {
+      weather: [],
+      isLoading: false
+    }
+  }
+
+  componentWillReceiveProps(){
+
+    var speedDate = require('speed-date');
+    let date = new Date();
+    let formatter = speedDate('YYYY-MM-DD');
+    let formatedDate = formatter(date);
+
+    this.setState({
+      isLoading: true
+    })
+    if(!isNaN(this.props.cityId)){
+    fetch('http://dev-weather-api.azurewebsites.net/api/city/'+this.props.cityId+'/weather?date='+formatedDate)
+      .then(res => res.json())
+        .then(data => this.setState({
+          weather: data,
+          isLoading: false
+        }))}
+  }
+
+  render(){
+
+    const{weather, isLoading} = this.state;
+
+    if(isLoading){
+      return <p>Loading...</p>
+    }
+
+    return(
+      
+      <div>
+       
+      {weather.map((cityWeather:any) =>
+        <h4>Temperature: {cityWeather.temperature} </h4>
+      )}
+        
+        
+      </div>
+      
+
+    )
+  }
 }
 
 const App: React.FC = () => {
