@@ -1,0 +1,10 @@
+select{
+  padding: 20px;
+  margin: 20px;
+  border-style: none;
+  font-size: 72px;
+  -webkit-appearance: none;
+}
+select:active{
+  border-style: none;
+}
