@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import { Container, Row, Col } from 'react-grid-system';
 
 type DropdownTypeState = {
   cities: [],
@@ -38,12 +39,15 @@ class DropdownList extends Component <{}, DropdownTypeState>{
     return (
 
       <div>
+        <div className="selectDiv">
         <select onChange={this.handleChange.bind(this)}>
           {cities.map((city:any) => 
               <option value={city.id}>{city.name}</option>
               )}
         </select>
+        </div>
         <Weather cityId={parseInt(this.state.selectedCity)}></Weather>
+        
       </div>
     )
   }
@@ -78,6 +82,8 @@ class Weather extends Component <WeatherPropsType,WeatherStateType>{
     let formatter = speedDate('YYYY-MM-DD');
     let formatedDate = formatter(date);
 
+   
+
     this.setState({
       isLoading: true
     })
@@ -102,22 +108,31 @@ class Weather extends Component <WeatherPropsType,WeatherStateType>{
 
 
     return(
-      <div><WeatherDetails weather={weather}></WeatherDetails> 
+      <div>
+      <WeatherDetails weather={weather}></WeatherDetails> 
+       
         <div className="basicInfoContainer">
            
           {weather.map((cityWeather:any) => 
+     
          <div className="basicInfo">
           
-         <h4>{this.getFullNameOfDay(new Date(cityWeather.date).getDay())}</h4>
-         <img src={require('./'+ cityWeather.type+'.png')} />
-         <span><br></br>{cityWeather.temperature}<br></br> </span>
-         <span>Pollen {cityWeather.pollenCount}</span>
-       </div>
-       
-       )}
-       </div>
+         <div className="col40"><b>{this.getFullNameOfDay(new Date(cityWeather.date).getDay())}</b> </div>
+         <div className="col15 image"><img src={require('./'+ cityWeather.type+'.png')} /> </div>
+         
+         <div className="col15">{Math.round((5/9 * (cityWeather.temperature) + 32))}</div>
+
+         <div className="col15 gray hideItMob">{cityWeather.temperature} </div>
+        
+         <div className="col15 hideItMob"><span className="gray">Pollen</span> {cityWeather.pollenCount}</div>
+         
+         <div className="showItMob">{cityWeather.temperature} <br></br> {Math.round((5/9 * (cityWeather.temperature) + 32))}</div>
        </div>
 
+       )}
+       </div>
+      </div>
+       
     )
   }
 }
@@ -152,20 +167,30 @@ class WeatherDetails extends Component<WeatherDetailsProps, {}> {
       {
         if(new Date(detailed.date).getDay() === new Date().getDay()){
           return (
-            <div className="detailed-row">
-              <div className="detailed-left">
-                <span>{this.formatThatDate(new Date(detailed.date))}<br></br></span>
-                <span>{detailed.type}<br></br></span>
-                <img src={require('./'+ detailed.type+'.png')} />
-                <span><br></br> {detailed.temperature}</span>
+            <div className="detailedWeatherContainer">
+                <div className="dateAndTypeDeatiledWeather">
+                {this.formatThatDate(new Date(detailed.date))}<br></br>
+                {detailed.type}<br></br>
+                </div>
+                <div className="kurwa">
+                <div className="detailedRight">
+                <span className="gray">Precipitation: </span> {detailed.precipitation}% <br></br>
+                <span className="gray">Humidity: </span>{detailed.humidity}% <br></br>
+                <span className="gray">Wind: </span>{detailed.windInfo.speed} mph {detailed.windInfo.direction} <br></br>
+                <span className="gray">Pollen Count: </span>{detailed.pollenCount} <br></br>
               </div>
-            <div className="detailed-right">
-              <span>Precipitation: {detailed.precipitation}%</span> <br></br>
-              <span>Humidity: {detailed.humidity}%</span> <br></br>
-              <span>Wind: {detailed.windInfo.speed} {detailed.windInfo.direction}</span> <br></br>
-              <span>Pollen Count: {detailed.pollenCount}</span> <br></br>
-            </div>
-            </div>
+                <div className="datiledLeft">
+                <br></br> 
+                  <div className="bigImage">
+                <img src={require('./'+ detailed.type+'.png')}/>
+                <span className="bigTemperature higher">{detailed.temperature}</span>
+                </div>
+                
+                </div>
+                
+              </div>
+              </div>
+            
           )
         } else {
           return "";
@@ -179,7 +204,9 @@ class WeatherDetails extends Component<WeatherDetailsProps, {}> {
 const App: React.FC = () => {
   return (
     <div className="App">
+     
       <DropdownList> </DropdownList>
+     
     </div>
   );
 }

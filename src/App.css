@@ -1,33 +1,81 @@
+
 select{
-  padding: 20px;
-  margin: 20px;
   border-style: none;
-  font-size: 72px;
   -webkit-appearance: none;
-  float:left;
+  font-size: 62px;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 5px;
 }
 select:active{
   border-style: none;
 }
 
+
+.dateAndTypeDeatiledWeather{
+    margin-left: 20px;
+}
+.kurwa{
+  padding: 0px 0px 20px 20px;
+}
+.detailedRight{
+  width:45%;
+  float:right !important;
+}
+.detailedLefT{
+  width: 45%;
+}
+.bigImage{
+  margin-left: 15px;
+  width: 50%;
+}
+.bigTemperature{
+  font-size: 36px;
+  margin-left: 10px;
+}
+
+.col40{
+  float: left;
+  width: 30%;
+  margin-left: 25px;
+  
+
+}
+.col15{
+  float: left;
+  width: 15%;
+  text-align: center;
+  vertical-align: middle;
+}
 .basicInfo{
-  float: left;
-  padding-left: 20px;
-  margin: 10px;
-  margin-left: 20px;
+  padding: 30px;
 }
-.detailed-left{
-  margin-left: 20px;
-  clear: left;
-  float: left;
+.gray{
+  color: gray;
 }
-.detailed-right{
-  margin-left: 400px;
+
+.higher{
+  padding-bottom: 50px;
 }
-.detailed-row{
-  clear: both;
-  margin-left: 20px;
+.image{
+ width: 60px;
+ height: 30px;
 }
-.basicInfoContainer{
- clear: both;
+
+@media (max-widt: 400px){
+  .smallestColumnMobile{
+    float:left;
+  }
+}
+@media (min-width: 650px) {
+  .basicInfo{
+    float:left;
+    width: 25%;
+  }
+  .col15{
+    float:none;
+  }
+  .col45{
+    float:none;
+  }
 }
