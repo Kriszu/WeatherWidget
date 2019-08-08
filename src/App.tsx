@@ -74,6 +74,7 @@ class Weather extends Component <WeatherPropsType,WeatherStateType>{
       isLoading: false
     }
   }
+  
 
   componentWillReceiveProps(){
 
@@ -119,14 +120,14 @@ class Weather extends Component <WeatherPropsType,WeatherStateType>{
           
          <div className="col40"><b>{this.getFullNameOfDay(new Date(cityWeather.date).getDay())}</b> </div>
          <div className="col15 image"><img src={require('./'+ cityWeather.type+'.png')} /> </div>
+         <div className="centerIt">
+           <div className="temperatureContainer">
+         <div className="col15mob">{Math.round((5/9 * (cityWeather.temperature) + 32))}&deg; </div>
+         <div className="col15mob  gray temperature2">{cityWeather.temperature}&deg;</div>
+         </div>
+         <div className="col15 itemPollen"><span className="gray">Pollen</span> {cityWeather.pollenCount}</div>
+         </div>
          
-         <div className="col15">{Math.round((5/9 * (cityWeather.temperature) + 32))}</div>
-
-         <div className="col15 gray hideItMob">{cityWeather.temperature} </div>
-        
-         <div className="col15 hideItMob"><span className="gray">Pollen</span> {cityWeather.pollenCount}</div>
-         
-         <div className="showItMob">{cityWeather.temperature} <br></br> {Math.round((5/9 * (cityWeather.temperature) + 32))}</div>
        </div>
 
        )}
@@ -183,7 +184,7 @@ class WeatherDetails extends Component<WeatherDetailsProps, {}> {
                 <br></br> 
                   <div className="bigImage">
                 <img src={require('./'+ detailed.type+'.png')}/>
-                <span className="bigTemperature higher">{detailed.temperature}</span>
+                <span className="bigTemperature higher">{detailed.temperature}&deg;</span>
                 </div>
                 
                 </div>
