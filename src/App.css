@@ -1,23 +1,26 @@
 .App{
  max-width: 950px;
+ min-width: 350px;
 }
 select{
   border-style: none;
   -webkit-appearance: none;
   font-size: 62px;
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 45px;
   padding: 5px;
 }
 select:active{
   border-style: none;
 }
 
-
+.detailedWeatherContainer{
+  margin-left:35px;
+}
 .dateAndTypeDeatiledWeather{
     margin-left: 20px;
 }
-.kurwa{
+.cont{
   padding: 0px 0px 20px 20px;
 }
 .detailedRight{
@@ -27,9 +30,11 @@ select:active{
 .detailedLefT{
   width: 45%;
 }
-.bigImage{
-  margin-left: 15px;
-  width: 50%;
+.image{
+  padding-right: 30px;
+}
+.dayName{
+  padding-top: 10px;
 }
 .bigTemperature{
   font-size: 36px;
@@ -40,8 +45,6 @@ select:active{
   float: left;
   width: 30%;
   margin-left: 25px;
-  
-
 }
 .col15{
   float: left;
@@ -56,8 +59,9 @@ select:active{
   vertical-align: middle;
 }
 .basicInfo{
-  padding: 30px;
+  padding: 30px 30px 45px 30px;
 }
+
 .gray{
   color: gray;
 }
@@ -69,8 +73,19 @@ select:active{
  width: 60px;
  height: 30px;
 }
-
-@media (max-width: 400px){
+@media (max-width: 860px ){
+  .basicInfo:after{
+    content: ""; /* This is necessary for the pseudo element to work. */ 
+      position: absolute;
+      left: 5%;
+      display: block; /* This will put the pseudo element on its own line. */
+      text-align: center; /* This will center the border. */
+      width: 90%; /* Change this to whatever width you want. */
+      padding-top: 50px; /* This creates some space between the element and the border. */
+      border-bottom: 1px solid #d1c7c7; 
+  }
+}
+@media (max-width: 520px){
 
  .temperatureContainer:after{
   display: block;
@@ -83,7 +98,10 @@ select:active{
  .col15mob{
    float: initial !important;
  }
-
+ .basicInfo{
+  padding: 30px;
+  
+}
 }
 
 @media (min-width: 860px) {
@@ -91,6 +109,7 @@ select:active{
     width: auto;
   }
   .basicInfo{
+    border-bottom: none;
     display:inline-block !important;
     width: 10%;
     margin:auto;
@@ -105,11 +124,6 @@ select:active{
   .temperature{
     margin-top: 10px !important;
   }
-  .temperatureContainer{
-    
-
-  }
-
   .col15mob{
     padding-top: 15px;
     display: inline-block;
@@ -120,9 +134,7 @@ select:active{
     text-align: center !important;
     
   }
-  .col40{
-    
-  }
+
   .image{
     padding-left: 25%;
   }

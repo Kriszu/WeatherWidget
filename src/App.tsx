@@ -118,7 +118,7 @@ class Weather extends Component <WeatherPropsType,WeatherStateType>{
      
          <div className="basicInfo">
           
-         <div className="col40"><b>{this.getFullNameOfDay(new Date(cityWeather.date).getDay())}</b> </div>
+         <div className="col40 dayName"><b>{this.getFullNameOfDay(new Date(cityWeather.date).getDay())}</b> </div>
          <div className="col15 image"><img src={require('./'+ cityWeather.type+'.png')} /> </div>
          <div className="centerIt">
            <div className="temperatureContainer">
@@ -173,7 +173,7 @@ class WeatherDetails extends Component<WeatherDetailsProps, {}> {
                 {this.formatThatDate(new Date(detailed.date))}<br></br>
                 {detailed.type}<br></br>
                 </div>
-                <div className="kurwa">
+                <div className="cont">
                 <div className="detailedRight">
                 <span className="gray">Precipitation: </span> {detailed.precipitation}% <br></br>
                 <span className="gray">Humidity: </span>{detailed.humidity}% <br></br>
